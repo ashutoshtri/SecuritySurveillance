@@ -5,7 +5,8 @@ import cv2
 import os
 import numpy as np
 from hack import hack
-
+import csv
+from playsound import playsound
 
 
 video_capture = cv2.VideoCapture(0)
@@ -62,9 +63,10 @@ while True:
         
         face_locations = face_recognition.face_locations(rgb_small_frame)
         face_encodings = face_recognition.face_encodings(rgb_small_frame, face_locations)
-
+        haha= 0
         face_names = []
         for face_encoding in face_encodings:
+            haha= haha + 1
             matches = face_recognition.compare_faces(known_face_encodings, face_encoding)
             name = "Unknown"
 
@@ -72,8 +74,11 @@ while True:
             best_match_index = np.argmin(face_distances)
             if matches[best_match_index]:
                 name = known_face_names[best_match_index]
-            if criminal_data[best_match_index] == 1:
-                print("CRIMINAL ALERT")
+            
+                
+            f = "alert.mp3"
+            os.system(f) 
+
 
             face_names.append(name)
 
